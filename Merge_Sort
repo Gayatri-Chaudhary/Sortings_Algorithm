@@ -1,0 +1,88 @@
+/******************************************************************************
+
+                            Online Java Compiler.
+                Code, Compile, Run and Debug java program online.
+Write your code in this editor and press "Run" button to execute it.
+
+*******************************************************************************/
+
+public class Main
+{
+    public static void mergeSort(int arr[],int low,int high){
+       if(low < high){
+           int mid = low + (high-low) / 2;
+           // DIVIDE
+           mergeSort(arr,low,mid);
+           mergeSort(arr,mid+1,high);
+           // MERGE
+           merge(arr,low,mid,high);
+       }
+    }
+    public static void merge(int arr[],int low,int mid,int high){
+        // size = high-low+1
+        int temp[] = new int[high-low+1];
+        int i=low;
+        int j=mid+1;
+        int k=0;
+        
+        while(i<=mid && j<=high){
+            if(arr[i]<=arr[j]){
+                temp[k++]=arr[i++];
+            }
+            else{
+                temp[k++]=arr[j++];
+            }
+        }
+        
+        while(i<=mid){
+            temp[k++]=arr[i++];
+        }
+        while(j<=high){
+            temp[k++]=arr[j++];
+        }
+        
+        // copy back -> arr[idx]=temp[idx-low]
+        // loop from low to high
+        for(int idx=low;idx<=high;idx++){
+            arr[idx]=temp[idx-low];
+        }
+        
+    }
+	public static void main(String[] args) {
+		int arr[]  = {1,0,2,3,9,8,3,4,5,6,8,98,8,7,6,5,6,322,5,6,7,8,9,29};
+		int n = arr.length;
+		mergeSort(arr,0,n-1);
+		
+		for(int i=0;i<arr.length;i++){
+		    System.out.print(arr[i]+" ");
+		}
+	}
+TC = O(nlogn)
+SC =  O(n) + O(log n) ≈ O(n)             // temp array and rec. stack
+
+Why Merge Sort is O(n log n)
+🔹 Step 1: How many levels? (log n)
+Each time you divide the array into half:
+n → n/2 → n/4 → n/8 → ... → 1
+This continues until size becomes 1.
+👉 Number of times you can divide = log₂(n)
+👉 So, total levels = log n
+
+
+🔹 Step 2: Work done at each level = O(n)
+At every level, you are merging all elements once
+Example:
+Level 1 → merge n elements
+Level 2 → merge n elements
+Level 3 → merge n elements
+...
+👉 Total work at each level = O(n)
+
+
+🔹 Step 3: Total Work
+Total Time = (work per level) × (number of levels)
+           = n × log n
+           = O(n log n)
+
+
+}
