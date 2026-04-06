@@ -1,0 +1,57 @@
+/******************************************************************************
+
+                            Online Java Compiler.
+                Code, Compile, Run and Debug java program online.
+Write your code in this editor and press "Run" button to execute it.
+
+*******************************************************************************/
+
+public class Main
+{
+    public static void quickSort(int arr[],int low,int high){
+       if(low < high){
+           int pidx = partition(arr,low,high); 
+           
+           quickSort(arr,low,pidx-1);    // left half
+           quickSort(arr,pidx+1,high);   // right half
+       }
+    }
+    public static int partition(int arr[],int low,int high){
+       int pivot = arr[high];     // pivot will be last element
+       int i = low-1;
+       
+       
+       for(int j=low;j<high;j++){  // merge sort ki trh = nhi hai kyonki last ele. pivot liya hai
+           if(arr[j]<=pivot){
+               i++;
+               // swap
+               int temp=arr[j];
+               arr[j]=arr[i];
+               arr[i]=temp;
+           }
+       }
+       // Pivot ko sahi position pr lagao
+       i++;
+       int temp = arr[i];
+       arr[i] = arr[high];
+       arr[high] = temp;
+       
+       return i;
+       
+    }
+	public static void main(String[] args) {
+		int arr[]  = {1,0,2,3,9,8,3,4,5,6,8,98,8,7,6,5,6,322,5,6,7,8,9,29};
+		int n = arr.length;
+		quickSort(arr,0,n-1);
+		
+		for(int i=0;i<arr.length;i++){
+		    System.out.print(arr[i]+" ");
+		}
+	}
+TC = best/avg. case = O(nlogn)
+     worst case = O(n^2)
+SC = O(1)  ignore call stack space
+
+
+
+}
